@@ -1,5 +1,8 @@
 package design.fiti.easybluetooth.ui
 
+
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,19 +25,24 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import design.fiti.easybluetooth.R
 import design.fiti.easybluetooth.ui.screens.home.HomeScreen
 import design.fiti.easybluetooth.ui.screens.onboarding.Onboarding
 import design.fiti.easybluetooth.ui.screens.result.ResultScreen
+import kotlinx.coroutines.flow.toList
 
 enum class Routes {
     ONBOARDING, HOME, RESULTS
@@ -57,19 +65,23 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
             .fillMaxSize()
     ) { paddingValues ->
         AnimatedNavHost(navController = navController, startDestination = Routes.ONBOARDING.name) {
+
             composable(route = Routes.ONBOARDING.name,
                 enterTransition = {
                     slideIntoContainer(
+
                         AnimatedContentTransitionScope.SlideDirection.Left,
+
                         animationSpec = tween(700)
                     )
                 },
                 exitTransition = {
                     slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        AnimatedContentTransitionScope.SlideDirection.Left,
                         animationSpec = tween(700)
                     )
                 }) {
+
 
                 Onboarding(
                     modifier = Modifier
@@ -77,7 +89,7 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                         .fillMaxSize(),
                     navigate = {
                         navController.navigate(Routes.HOME.name)
-                        navController.popBackStack()
+                        navController.popBackStack(route = Routes.HOME.name, inclusive = false)
                     }
 
                 )
@@ -94,7 +106,7 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                 },
                 exitTransition = {
                     slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        AnimatedContentTransitionScope.SlideDirection.Left,
                         animationSpec = tween(700)
                     )
                 }
@@ -119,7 +131,7 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                 },
                 exitTransition = {
                     slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        AnimatedContentTransitionScope.SlideDirection.Left,
                         animationSpec = tween(700)
                     )
                 }

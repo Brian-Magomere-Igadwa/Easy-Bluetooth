@@ -1,5 +1,6 @@
 package design.fiti.easybluetooth.ui.screens.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,10 +14,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +46,9 @@ fun HomeScreen(
     deviceConnected: Boolean = true,
     navigate: () -> Unit = {}
 ) {
+    var itemSelected = rememberSaveable {
+        mutableStateOf(true)
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,30 +77,38 @@ fun HomeScreen(
                 .weight(0.15f)
 
         )
-        if (deviceConnected) {
-            Connected()
-        } else {
-            NotConnected()
-        }
+        AnimatedVisibility(visible = itemSelected.value) {
+//            if (deviceConnected) {
+            if (itemSelected.value) {
+                Connected(navigate = navigate, disconnect = { itemSelected.value = false })
+            }
 
+        }
+        AnimatedVisibility(visible = !itemSelected.value) {
+            if (!itemSelected.value) {
+                NotConnected(navigate = navigate)
+            }
+        }
         Spacer(
             modifier = Modifier
                 .weight(0.7f)
-
         )
 
     }
 
+
 }
+
 
 @Preview
 @Composable
-fun NotConnected(modifier: Modifier = Modifier) {
+fun NotConnected(modifier: Modifier = Modifier, navigate: () -> Unit) {
     Column(modifier = modifier) {
         Box(
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 54.dp)
+
         ) {
             BoldSomeText(
                 fullSentence = "Click to search for nearby bluetooth devices.",
@@ -118,9 +134,9 @@ fun NotConnected(modifier: Modifier = Modifier) {
             AppButton(
                 title = R.string.search_cta,
                 modifier = Modifier
-                    .fillMaxWidth(R.dimen.button_width.toFloat())
-                    .background(MaterialTheme.colorScheme.secondary),
-                onClick = { },
+                    .fillMaxWidth(R.dimen.button_width.toFloat()),
+                onClick = navigate,
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
             )
         }
     }
@@ -128,7 +144,7 @@ fun NotConnected(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun Connected(modifier: Modifier = Modifier) {
+fun Connected(modifier: Modifier = Modifier, navigate: () -> Unit, disconnect: () -> Unit) {
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
             Modifier
@@ -157,12 +173,12 @@ fun Connected(modifier: Modifier = Modifier) {
                 .padding(horizontal = 60.dp)
         ) {
             Row {
-                Button(onClick = {}, shape = RoundedCornerShape(size = 14.dp)) {
-                    Text(text = stringResource(R.string.search_cta))
+                Button(onClick = disconnect, shape = RoundedCornerShape(size = 14.dp)) {
+                    Text(text = stringResource(R.string.disconnect_cta))
                 }
                 Spacer(modifier = Modifier.width(24.dp))
-                OutlinedButton(onClick = { /*TODO*/ }, shape = RoundedCornerShape(size = 14.dp)) {
-                    Text(text = stringResource(R.string.search_cta))
+                OutlinedButton(onClick = navigate, shape = RoundedCornerShape(size = 14.dp)) {
+                    Text(text = stringResource(R.string.scan_cta))
                 }
 
             }

@@ -5,4 +5,6 @@
     <string name="search_cta">Search now</string>
     <string name="back_navigation">Go to previous page.</string>
     <string name="result_screen">Results</string>
+    <string name="disconnect_cta">Disconnect</string>
+    <string name="scan_cta">Rescan</string>
 </resources>

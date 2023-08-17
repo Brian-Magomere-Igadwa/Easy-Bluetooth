@@ -16,7 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 
@@ -73,12 +76,14 @@ fun Onboarding(modifier: Modifier = Modifier, navigate: () -> Unit = {}) {
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 60.dp)
+                .background(color = Color.Transparent)
         ) {
             AppButton(
                 title = R.string.cta,
                 modifier = Modifier
-                    .fillMaxWidth(R.dimen.button_width.toFloat())
-                    .background(MaterialTheme.colorScheme.secondary),
+                    .fillMaxWidth(R.dimen.button_width.toFloat()),
+
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
                 onClick = navigate,
             )
         }

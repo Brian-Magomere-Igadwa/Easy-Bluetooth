@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -79,7 +82,7 @@ fun Results(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(data) {
-                Box(modifier = Modifier.padding(horizontal = 42.dp)) {
+                Box(modifier = Modifier.padding(horizontal = 36.dp)) {
                     ResultItem(modifier = Modifier.fillMaxWidth())
                 }
             }
@@ -88,7 +91,7 @@ fun Results(modifier: Modifier = Modifier) {
             Color.White.copy(alpha = 0f),
             Color.White.copy(alpha = 0.25f),
             Color.White.copy(alpha = 0.5f),
-            Color.White
+            Color.White.copy(alpha = 0.8f)
         )
         Box(
             modifier = Modifier
@@ -109,53 +112,62 @@ fun Results(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun ResultItem(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(60.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .clickable { }
-            .clip(shape = RoundedCornerShape(20.dp))
-            .background(MaterialTheme.colorScheme.tertiary)
-            .shadow(
-                elevation = 2.2368102073669434.dp,
-                spotColor = Color(0x66000000),
-                ambientColor = Color(0x66000000)
-            )
-            .padding(
-                horizontal = 24.dp,
-                vertical = 32.dp
-            )
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(20.dp),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.secondary,
+        ),
+        modifier = modifier.shadow(
+            elevation = 2.2368102073669434.dp,
+            spotColor = Color(0x66000000),
+            ambientColor = Color(0x66000000)
+        )
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(60.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = 24.dp,
+                    vertical = 32.dp
+                )
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.bluetoothicon),
-                contentDescription = null
-            )
-            Column {
-                Text(
-                    text = "Sony Home Theater",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 14.32.sp,
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFF586D5E),
-                    ),
-                    overflow = TextOverflow.Ellipsis
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(60.dp, Alignment.Start),
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.bluetoothicon),
+                    contentDescription = null
                 )
-                Text(
-                    text = "Found now!",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 14.32.sp,
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF586D5E),
-                    ),
-                    overflow = TextOverflow.Ellipsis
-                )
+                Column {
+                    Text(
+                        text = "Sony Home Theater",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 14.32.sp,
+                            fontWeight = FontWeight(700),
+                            color = Color(0xFF586D5E),
+                        ),
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "Found now!",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 14.32.sp,
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF586D5E),
+                        ),
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
-        }
 
+        }
     }
+
 }
 
 @Preview
