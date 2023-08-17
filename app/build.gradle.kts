@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "design.fiti.easybluetooth"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "design.fiti.easybluetooth"
@@ -31,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -75,18 +75,16 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
 
     // Testing with espresso and jUnit
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
 // Work testing
     androidTestImplementation("androidx.work:work-testing:2.8.1")
+// WorkManager dependency
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
 //preference datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-core:1.0.0")
 
-// WorkManager dependency
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     //viewModel architectural component
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
@@ -109,9 +107,12 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
     //gson
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     //navigation
-    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.5.3")
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.0")
+
+    implementation ("com.google.accompanist:accompanist-navigation-animation:0.33.0-alpha")
+
 }

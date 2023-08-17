@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="below_button_padding">64</dimen>
+    <dimen name="button_inner_padding">24</dimen>
+    <dimen name="logo_padding">60</dimen>
+    <dimen name="button_width">0.75</dimen>
+</resources>

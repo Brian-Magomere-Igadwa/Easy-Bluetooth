@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Easy Bluetooth</string>
+    <string name="cta">Get started!</string>
+    <string name="app_title">Easy Bluetooth</string>
+    <string name="search_cta">Search now</string>
+    <string name="back_navigation">Go to previous page.</string>
+    <string name="result_screen">Results</string>
 </resources>
