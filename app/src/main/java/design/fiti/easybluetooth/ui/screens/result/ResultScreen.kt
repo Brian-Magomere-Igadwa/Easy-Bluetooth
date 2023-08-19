@@ -86,12 +86,15 @@ fun Results(modifier: Modifier = Modifier) {
                     ResultItem(modifier = Modifier.fillMaxWidth())
                 }
             }
+            item {
+                Spacer(modifier = Modifier.height(48.dp))
+            }
         }
         val shades = listOf(
-            Color.White.copy(alpha = 0f),
-            Color.White.copy(alpha = 0.25f),
-            Color.White.copy(alpha = 0.5f),
-            Color.White.copy(alpha = 0.8f)
+            MaterialTheme.colorScheme.background.copy(alpha = 0f),
+            MaterialTheme.colorScheme.background.copy(alpha = 0.25f),
+            MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+            MaterialTheme.colorScheme.background.copy(alpha = 0.8f)
         )
         Box(
             modifier = Modifier
@@ -117,12 +120,13 @@ fun ResultItem(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
         shape = RoundedCornerShape(20.dp),
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.secondary,
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ),
         modifier = modifier.shadow(
-            elevation = 2.2368102073669434.dp,
+            elevation = 4.dp,
             spotColor = Color(0x66000000),
+            shape = RoundedCornerShape(20.dp),
             ambientColor = Color(0x66000000)
         )
     ) {
@@ -181,7 +185,8 @@ fun UpBar(
         modifier
             .padding(horizontal = 20.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = navigate) {
             Icon(

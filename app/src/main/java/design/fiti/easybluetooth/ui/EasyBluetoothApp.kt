@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
@@ -60,6 +62,7 @@ fun AppBar(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modifier) {
+    val timeInMillis = 300
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -67,18 +70,46 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
         AnimatedNavHost(navController = navController, startDestination = Routes.ONBOARDING.name) {
 
             composable(route = Routes.ONBOARDING.name,
+                popEnterTransition = {
+                    slideIntoContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
                 enterTransition = {
                     slideIntoContainer(
 
                         AnimatedContentTransitionScope.SlideDirection.Left,
 
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 },
                 exitTransition = {
                     slideOutOfContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 }) {
 
@@ -89,7 +120,6 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                         .fillMaxSize(),
                     navigate = {
                         navController.navigate(Routes.HOME.name)
-                        navController.popBackStack(route = Routes.HOME.name, inclusive = false)
                     }
 
                 )
@@ -98,16 +128,44 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
             }
             composable(
                 route = Routes.HOME.name,
+                popEnterTransition = {
+                    slideIntoContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
                 enterTransition = {
                     slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 },
                 exitTransition = {
                     slideOutOfContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 }
 
@@ -117,22 +175,53 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                     modifier = Modifier
                         .padding(paddingValues)
                         .fillMaxSize(),
-                    navigate = { navController.navigate(Routes.RESULTS.name) }
+                    navigate = {
+                        navController.navigate(Routes.RESULTS.name)
+
+                    }
                 )
 
 
             }
             composable(route = Routes.RESULTS.name,
+                popEnterTransition = {
+                    slideIntoContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                },
                 enterTransition = {
                     slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 },
                 exitTransition = {
                     slideOutOfContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(700)
+                        animationSpec = tween(
+                            durationMillis = timeInMillis,
+                            easing = FastOutSlowInEasing
+                        )
                     )
                 }
             ) {
