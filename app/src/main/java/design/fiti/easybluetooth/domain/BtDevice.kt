@@ -1,8 +1,8 @@
 package design.fiti.easybluetooth.domain
 
-typealias BtDevicesDomain = BtDevices
+typealias BtDevicesDomain = BtDevice
 
-data class BtDevices(
+data class BtDevice(
     val deviceName: String,
     val macAddress: String
 )

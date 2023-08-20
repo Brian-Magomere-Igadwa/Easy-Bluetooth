@@ -2,12 +2,10 @@ package design.fiti.easybluetooth.presentation.screens.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,22 +18,18 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import design.fiti.easybluetooth.R
+import design.fiti.easybluetooth.presentation.screens.EasyBtViewModel
 import design.fiti.easybluetooth.presentation.screens.components.AppButton
 import design.fiti.easybluetooth.presentation.screens.components.BoldSomeText
 
@@ -46,8 +40,9 @@ fun HomeScreen(
     deviceConnected: Boolean = true,
     navigate: () -> Unit = {}
 ) {
+    val viewModel: EasyBtViewModel = viewModel(factory = EasyBtViewModel.Factory)
     var itemSelected = rememberSaveable {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
     Column(
         modifier = modifier,
@@ -80,13 +75,22 @@ fun HomeScreen(
         AnimatedVisibility(visible = itemSelected.value) {
 //            if (deviceConnected) {
             if (itemSelected.value) {
-                Connected(navigate = navigate, disconnect = { itemSelected.value = false })
+                Connected(navigate = navigate, disconnect = {
+                    itemSelected.value = false
+
+                }, rescan = {
+                    navigate()
+                    viewModel.scanForDevices()
+                })
             }
 
         }
         AnimatedVisibility(visible = !itemSelected.value) {
             if (!itemSelected.value) {
-                NotConnected(navigate = navigate)
+                NotConnected(onClick = {
+                    navigate()
+                    viewModel.scanForDevices()
+                })
             }
         }
         Spacer(
@@ -102,7 +106,7 @@ fun HomeScreen(
 
 @Preview
 @Composable
-fun NotConnected(modifier: Modifier = Modifier, navigate: () -> Unit) {
+fun NotConnected(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Column(modifier = modifier) {
         Box(
             Modifier
@@ -135,7 +139,7 @@ fun NotConnected(modifier: Modifier = Modifier, navigate: () -> Unit) {
                 title = R.string.search_cta,
                 modifier = Modifier
                     .fillMaxWidth(R.dimen.button_width.toFloat()),
-                onClick = navigate,
+                onClick = onClick,
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
             )
         }
@@ -144,7 +148,12 @@ fun NotConnected(modifier: Modifier = Modifier, navigate: () -> Unit) {
 
 @Preview
 @Composable
-fun Connected(modifier: Modifier = Modifier, navigate: () -> Unit, disconnect: () -> Unit) {
+fun Connected(
+    modifier: Modifier = Modifier,
+    navigate: () -> Unit,
+    disconnect: () -> Unit,
+    rescan: () -> Unit
+) {
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
             Modifier
@@ -177,7 +186,7 @@ fun Connected(modifier: Modifier = Modifier, navigate: () -> Unit, disconnect: (
                     Text(text = stringResource(R.string.disconnect_cta))
                 }
                 Spacer(modifier = Modifier.width(24.dp))
-                OutlinedButton(onClick = navigate, shape = RoundedCornerShape(size = 14.dp)) {
+                OutlinedButton(onClick = rescan, shape = RoundedCornerShape(size = 14.dp)) {
                     Text(text = stringResource(R.string.scan_cta))
                 }
 

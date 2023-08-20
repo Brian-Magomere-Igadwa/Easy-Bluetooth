@@ -7,4 +7,6 @@
     <string name="result_screen">Results</string>
     <string name="disconnect_cta">Disconnect</string>
     <string name="scan_cta">Rescan</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="scanned_devices">Scanned Devices</string>
 </resources>

@@ -2,14 +2,13 @@ package design.fiti.easybluetooth.data
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import design.fiti.easybluetooth.domain.BtController
-import design.fiti.easybluetooth.domain.BtDevices
+import design.fiti.easybluetooth.domain.BtDevice
 import design.fiti.easybluetooth.domain.BtDevicesDomain
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,11 +27,11 @@ class AndroidBluetoothController(
     }
 
     private val _scannedDevices = MutableStateFlow<List<BtDevicesDomain>>(emptyList())
-    override val scannedDevices: StateFlow<List<BtDevices>>
+    override val scannedDevices: StateFlow<List<BtDevice>>
         get() = _scannedDevices.asStateFlow()
 
     private val _pairedDevices = MutableStateFlow<List<BtDevicesDomain>>(emptyList())
-    override val pairedDevices: StateFlow<List<BtDevices>>
+    override val pairedDevices: StateFlow<List<BtDevice>>
         get() = _pairedDevices.asStateFlow()
 
     private val foundDeviceReceiver = FoundDeviceReceiver { foundDevice ->
@@ -64,7 +63,6 @@ class AndroidBluetoothController(
             return
         }
         bluetoothAdapter?.cancelDiscovery()
-
     }
 
     override fun release() {

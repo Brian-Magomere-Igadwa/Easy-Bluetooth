@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <!-- Request legacy Bluetooth permissions on older devices. -->
     <uses-permission
         android:name="android.permission.BLUETOOTH"
@@ -22,8 +23,8 @@
     <!-- Needed only if your app uses Bluetooth scan results to derive physical
     location. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Automatically switch bluetooth on or off from the app-->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- Automatically switch bluetooth on or off from the app with bt admin permissions-->
+
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <!--Hide on playstore from devices that don't support bluetooth and bluetooth low energy-->
     <uses-feature
@@ -34,6 +35,7 @@
         android:required="true" />
 
     <application
+        android:name=".presentation.EasyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
