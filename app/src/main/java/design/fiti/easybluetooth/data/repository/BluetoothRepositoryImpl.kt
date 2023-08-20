@@ -1,14 +1,19 @@
-package design.fiti.easybluetooth.data
+package design.fiti.easybluetooth.data.repository
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import design.fiti.easybluetooth.data.AndroidBluetoothController
+import design.fiti.easybluetooth.domain.BtController
+import design.fiti.easybluetooth.domain.repository.BluetoothRepository
 import design.fiti.easybluetooth.domain.BtDevice
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class BluetoothRepositoryImpl(
-    private val context: Context
+class BluetoothRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : BluetoothRepository {
 
-    private val BluetoothController by lazy {
+    override val BluetoothController: BtController by lazy {
         AndroidBluetoothController(context)
     }
 

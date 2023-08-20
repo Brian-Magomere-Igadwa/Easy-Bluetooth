@@ -1,15 +1,9 @@
 package design.fiti.easybluetooth.presentation
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import design.fiti.easybluetooth.data.AppContainer
 import design.fiti.easybluetooth.data.AppDataContainer
 
-class EasyApplication : Application() {
-
-    lateinit var container: AppContainer
-
-    override fun onCreate() {
-        super.onCreate()
-        container = AppDataContainer(this)
-    }
-}
+@HiltAndroidApp
+class EasyApplication : Application()

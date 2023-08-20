@@ -1,4 +1,4 @@
-package design.fiti.easybluetooth.data
+package design.fiti.easybluetooth.domain.repository
 
 import design.fiti.easybluetooth.domain.BtController
 import design.fiti.easybluetooth.domain.BtDevice
@@ -8,6 +8,8 @@ interface BluetoothRepository : BtController {
     override val scannedDevices: StateFlow<List<BtDevice>>
 
     override val pairedDevices: StateFlow<List<BtDevice>>
+
+    val BluetoothController: BtController
 
     override fun startDiscovery()
 
