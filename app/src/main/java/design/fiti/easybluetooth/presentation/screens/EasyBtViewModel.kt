@@ -23,6 +23,3 @@ class EasyBtViewModel @Inject constructor(
         )
     }
 }
-
-
-}
