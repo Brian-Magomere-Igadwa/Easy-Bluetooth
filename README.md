@@ -3,6 +3,7 @@ A mobile app that improves the bluetooth scanning user experience by simplifying
 #### Tech-stack
 * Tech-stack
     * [Kotlin](https://kotlinlang.org/) - a cross-platform, statically typed, general-purpose programming language with type inference.
+    * [Figma](https:/figma.com/) - a highly adopted UI/UX platform for designing great user expiriences.
     * [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - lightweight threads to perfom asynchronous tasks.
     * [Flow](https://kotlinlang.org/docs/reference/coroutines/flow.html) - a type of stream of data that emit multiple values sequentially.
     * [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#:~:text=StateFlow%20is%20a%20state%2Dholder,property%20of%20the%20MutableStateFlow%20class.) - Flow APIs that enables flows to optimmaly emit state updated and emit values to multiple consumers.
