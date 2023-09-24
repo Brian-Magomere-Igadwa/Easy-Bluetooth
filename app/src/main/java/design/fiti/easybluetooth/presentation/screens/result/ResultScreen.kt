@@ -52,10 +52,7 @@ fun ResultScreen(
     navigate: () -> Unit = {},
     viewModel: EasyBtViewModel
 ) {
-
     val results by viewModel.uiState.collectAsState()
-
-    Log.d(TAG, "ResultScreen: $results")
 
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(48.dp))
@@ -87,7 +84,7 @@ fun Results(modifier: Modifier = Modifier, results: ResultsUiState) {
                         fromNewScan = false
                     )
 
-                    Text(text = "Wiiiiiiiiiiiiiii")
+
                 }
             }
             item {

@@ -55,20 +55,13 @@ class AndroidBluetoothController(
     }
 
     override fun startDiscovery() {
-        Log.d("startDiscovery:", "Discovery called ")
 
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
-            Log.d("startDiscovery:", "Discovery Lacked Permissions ")
-
-
-
             return
         }
-        Log.d("startDiscovery:", "Discovery About to start ")
-        //To tell android what reciever we're interested in and for what intent
+
         context.registerReceiver(foundDeviceReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
 
-        //no need to rescan for already paired devices so we get those first
         updatePairedDevices()
         bluetoothAdapter?.startDiscovery()
 
@@ -87,7 +80,7 @@ class AndroidBluetoothController(
 
     private fun updatePairedDevices() {
         if (!hasPermission(Manifest.permission.BLUETOOTH)) {
-            Log.d("startDiscovery:", "get paired ")
+
             return
         }
         bluetoothAdapter?.bondedDevices?.map { it.toBtDevicesDomain() }?.also { devices ->
