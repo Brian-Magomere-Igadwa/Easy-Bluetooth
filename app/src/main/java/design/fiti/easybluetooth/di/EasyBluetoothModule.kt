@@ -9,12 +9,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import design.fiti.easybluetooth.data.repository.BluetoothRepositoryImpl
 import design.fiti.easybluetooth.domain.repository.BluetoothRepository
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object EasyBluetoothModule {
 
     @Provides
+    @Singleton
     fun providesBluetoothRepository(
         btRepository: BluetoothRepositoryImpl,
     ): BluetoothRepository {

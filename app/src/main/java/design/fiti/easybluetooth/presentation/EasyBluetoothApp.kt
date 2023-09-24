@@ -15,9 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 import design.fiti.easybluetooth.R
+import design.fiti.easybluetooth.presentation.screens.EasyBtViewModel
 import design.fiti.easybluetooth.presentation.screens.home.HomeScreen
 import design.fiti.easybluetooth.presentation.screens.onboarding.Onboarding
 import design.fiti.easybluetooth.presentation.screens.result.ResultScreen
@@ -37,13 +38,17 @@ fun AppBar(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modifier) {
+fun EasyBluetoothApp(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    viewModel: EasyBtViewModel
+) {
     val timeInMillis = 300
     Scaffold(
         modifier = modifier
             .fillMaxSize()
     ) { paddingValues ->
-        AnimatedNavHost(navController = navController, startDestination = Routes.ONBOARDING.name) {
+        NavHost(navController = navController, startDestination = Routes.ONBOARDING.name) {
 
             composable(route = Routes.ONBOARDING.name,
                 popEnterTransition = {
@@ -154,7 +159,8 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                     navigate = {
                         navController.navigate(Routes.RESULTS.name)
 
-                    }
+                    },
+                    viewModel = viewModel
                 )
 
 
@@ -206,7 +212,8 @@ fun EasyBluetoothApp(navController: NavHostController, modifier: Modifier = Modi
                     modifier = Modifier
                         .padding(paddingValues)
                         .fillMaxSize(),
-                    navigate = { navController.navigateUp() }
+                    navigate = { navController.navigateUp() },
+                    viewModel=viewModel
                 )
 
 

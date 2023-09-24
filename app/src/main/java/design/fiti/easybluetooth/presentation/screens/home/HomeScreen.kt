@@ -1,5 +1,11 @@
 package design.fiti.easybluetooth.presentation.screens.home
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -27,7 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import design.fiti.easybluetooth.R
 import design.fiti.easybluetooth.presentation.screens.EasyBtViewModel
 import design.fiti.easybluetooth.presentation.screens.components.AppButton
@@ -38,9 +44,11 @@ import design.fiti.easybluetooth.presentation.screens.components.BoldSomeText
 fun HomeScreen(
     modifier: Modifier = Modifier,
     deviceConnected: Boolean = true,
-    navigate: () -> Unit = {}
+    navigate: () -> Unit = {},
+    viewModel: EasyBtViewModel
 ) {
-    val viewModel: EasyBtViewModel = viewModel(factory = EasyBtViewModel.Factory)
+
+
     var itemSelected = rememberSaveable {
         mutableStateOf(false)
     }
@@ -88,6 +96,7 @@ fun HomeScreen(
         AnimatedVisibility(visible = !itemSelected.value) {
             if (!itemSelected.value) {
                 NotConnected(onClick = {
+
                     navigate()
                     viewModel.scanForDevices()
                 })

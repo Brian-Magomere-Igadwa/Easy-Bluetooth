@@ -2,11 +2,19 @@ package design.fiti.easybluetooth.data
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.app.PendingIntent.getActivity
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+
 import design.fiti.easybluetooth.domain.BtController
 import design.fiti.easybluetooth.domain.BtDevice
 import design.fiti.easybluetooth.domain.BtDevicesDomain
@@ -37,7 +45,8 @@ class AndroidBluetoothController(
     private val foundDeviceReceiver = FoundDeviceReceiver { foundDevice ->
         _scannedDevices.update { existingDevices ->
             val newDevice = foundDevice.toBtDevicesDomain()
-            if (newDevice in existingDevices) existingDevices else existingDevices + newDevice
+            existingDevices + newDevice
+//            if (newDevice in existingDevices) existingDevices else existingDevices + newDevice
         }
     }
 
@@ -46,9 +55,16 @@ class AndroidBluetoothController(
     }
 
     override fun startDiscovery() {
+        Log.d("startDiscovery:", "Discovery called ")
+
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+            Log.d("startDiscovery:", "Discovery Lacked Permissions ")
+
+
+
             return
         }
+        Log.d("startDiscovery:", "Discovery About to start ")
         //To tell android what reciever we're interested in and for what intent
         context.registerReceiver(foundDeviceReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
 
@@ -59,7 +75,7 @@ class AndroidBluetoothController(
     }
 
     override fun stopDiscovery() {
-        if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+        if (!hasPermission(Manifest.permission.BLUETOOTH)) {
             return
         }
         bluetoothAdapter?.cancelDiscovery()
@@ -70,7 +86,8 @@ class AndroidBluetoothController(
     }
 
     private fun updatePairedDevices() {
-        if (!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+        if (!hasPermission(Manifest.permission.BLUETOOTH)) {
+            Log.d("startDiscovery:", "get paired ")
             return
         }
         bluetoothAdapter?.bondedDevices?.map { it.toBtDevicesDomain() }?.also { devices ->

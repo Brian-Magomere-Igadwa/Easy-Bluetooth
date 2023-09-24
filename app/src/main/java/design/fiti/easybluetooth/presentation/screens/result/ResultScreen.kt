@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import design.fiti.easybluetooth.R
 import design.fiti.easybluetooth.domain.BtDevice
 import design.fiti.easybluetooth.presentation.screens.EasyBtViewModel
@@ -47,23 +47,26 @@ import design.fiti.easybluetooth.presentation.screens.ResultsUiState
 
 
 @Composable
-fun ResultScreen(modifier: Modifier = Modifier, navigate: () -> Unit = {}) {
-    val viewModel: EasyBtViewModel = viewModel(factory = EasyBtViewModel.Factory)
+fun ResultScreen(
+    modifier: Modifier = Modifier,
+    navigate: () -> Unit = {},
+    viewModel: EasyBtViewModel
+) {
+
     val results by viewModel.uiState.collectAsState()
 
     Log.d(TAG, "ResultScreen: $results")
 
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(48.dp))
-        UpBar(navigate = navigate, refresh = {})
+        UpBar(navigate = navigate, refresh = { viewModel.scanForDevices() })
         Spacer(modifier = Modifier.height(80.dp))
         Results(results = results)
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun Results(modifier: Modifier = Modifier, results: ResultsUiState = ResultsUiState()) {
+fun Results(modifier: Modifier = Modifier, results: ResultsUiState) {
     val pairedDevices = results.pairedDevices
     val scannedDevices = results.scannedDevices
 
@@ -76,9 +79,15 @@ fun Results(modifier: Modifier = Modifier, results: ResultsUiState = ResultsUiSt
             item {
                 Text(text = stringResource(id = R.string.paired_devices))
             }
-            items(pairedDevices) {
+            items(pairedDevices) { theDevice ->
                 Box(modifier = Modifier.padding(horizontal = 36.dp)) {
-                    ResultItem(modifier = Modifier.fillMaxWidth(), device = it, fromNewScan = false)
+                    ResultItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        device = theDevice,
+                        fromNewScan = false
+                    )
+
+                    Text(text = "Wiiiiiiiiiiiiiii")
                 }
             }
             item {
@@ -89,7 +98,11 @@ fun Results(modifier: Modifier = Modifier, results: ResultsUiState = ResultsUiSt
             }
             items(scannedDevices) {
                 Box(modifier = Modifier.padding(horizontal = 36.dp)) {
-                    ResultItem(modifier = Modifier.fillMaxWidth(), device = it, fromNewScan = true)
+                    ResultItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        device = it ?: it.copy(deviceName = "un-named device"),
+                        fromNewScan = true
+                    )
                 }
             }
             item {
@@ -118,7 +131,6 @@ fun Results(modifier: Modifier = Modifier, results: ResultsUiState = ResultsUiSt
     }
 }
 
-@Preview
 @Composable
 fun ResultItem(
     modifier: Modifier = Modifier,
