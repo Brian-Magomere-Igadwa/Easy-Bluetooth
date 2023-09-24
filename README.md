@@ -34,7 +34,7 @@ The domain layer serves as the application's central core. It operates independe
 The data layer is responsible for selecting the appropriate data source for the domain layer, which, in this case, exclusively comprises a local source. It encompasses the implementations of the repositories declared in the domain layer. Components within the data layer encompass:* Repositories: Responsible for exposing data to the domain layer.
 * Repositories: These are responsible for making data available to the domain layer.
 * Mappers: They facilitate the transformation of data between domain models, DTOs (Data Transfer Objects), and entity models.
-* Sources: These determine which data source (network or cache) will be utilized when retrieving data.
+* Sources: These determine which data source (network or cache) will be utilized when retrieving data much of which is this case is more less just the Android Os.
 
 
 #### 3. Presentation
